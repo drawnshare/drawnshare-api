@@ -17,9 +17,12 @@ We're using MySQL as our database dialect, and Sequelize as our ORM. To enable s
 ``` JavaScript
 var sequelize = new Sequelize('drawnshare', 'root', 'toor', {
     host: 'localhost',
-    dialect: 'mariadb'
+    dialect: 'mariadb',
+    port: 3306
 });
 ``` 
+
+And lastly, you'll need to create a database (default name should be drawnshare, as shown above).
 
 ## Launching
 We're planning to add an extensive API documentation so it'll be pretty easily usable, but until then, here's how to get the API up and running localy:
