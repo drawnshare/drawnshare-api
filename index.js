@@ -2,11 +2,15 @@
  * Dependencies
  */
 var express = require('express');
+var models = require('./models');
+var bodyParser = require('body-parser');
 
 /*
  * Creating express app
  */
 var app = express();
+
+app.use(bodyParser.json());
 
 /*
  * Basic routing
@@ -26,6 +30,6 @@ app.get('/api', function(req, res) {
 var port = 3000;
 
 app.listen(port, function() {
-    console.log('Let the magic happen! Server listenin on port ' + port + '.')
+    console.log('Let the magic happen! Server listening on port ' + port + '.')
 });
 
