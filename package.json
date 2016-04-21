@@ -1,0 +1,27 @@
+{
+  "name": "drawnshare-api",
+  "version": "1.0.0",
+  "description": "Small API used in the drawn n' share project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drawnshare/drawnshare.git"
+  },
+  "keywords": [
+    "drawnshare",
+    "API"
+  ],
+  "author": "half-shell",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/drawnshare/drawnshare/issues"
+  },
+  "homepage": "https://github.com/drawnshare/drawnshare#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "sequelize": "^3.21.0"
+  }
+}
