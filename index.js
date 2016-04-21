@@ -9,23 +9,16 @@ var bodyParser = require('body-parser');
  * Creating express app
  */
 var app = express();
-
+// Let express use body-parser
 app.use(bodyParser.json());
 
 /*
- * Basic routing
+ * Routing
  */
-app.get('/', function(req, res) {
-    res.redirect('/api')
-});
-
-app.get('/api', function(req, res) {
-    console.info('Client reached the API home.')
-    res.send('Welcome to the api.')
-});
+require('./routes')(app);
 
 /*
- * Basic listener
+ * Server listener
  */
 var port = 3000;
 

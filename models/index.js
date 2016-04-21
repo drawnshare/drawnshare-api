@@ -1,7 +1,9 @@
+/*
+ * Dependencies
+ */
 var sequelize = require('./sequelize');
+var Task = require('./Task');
 
-//sequelize.sync();
-//
 /*
  * Database testing
  */
@@ -13,7 +15,15 @@ sequelize.validate().then(function(err) {
     }
 });
 
+/*
+ * Syncing database
+ */
+sequelize.sync();
 
+/*
+ * Exporting all models
+ */
 module.exports = {
-    sequelize : sequelize
+    sequelize : sequelize,
+    Task : Task
 };
