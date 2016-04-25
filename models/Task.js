@@ -8,8 +8,14 @@ var Sequelize = require('sequelize'); //Sequelize is necessary to get the dataty
  * Defining model and relations
  */
 var Task = sequelize.define('task', {
-    title: Sequelize.STRING,
-    description: Sequelize.TEXT
+    title:{
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    description:{
+        type: Sequelize.TEXT,
+        allowNull: false
+    } 
 });
 
 /*

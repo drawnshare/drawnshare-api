@@ -35,5 +35,7 @@ node index.js
 ```
 
 # Todo
+* [ ] Add findAndCreate() after checking if the task exists instead of plain create()
+* [ ] Authentification
 * [ ] Unit testing
 * [ ] API doc

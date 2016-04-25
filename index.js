@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
  */
 var app = express();
 // Let express use body-parser
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 /*
  * Routing
