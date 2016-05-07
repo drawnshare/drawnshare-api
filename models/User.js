@@ -7,17 +7,21 @@ var Sequelize = require('sequelize'); //Sequelize is necessary to get the dataty
 /*
  * Defining model
  */
-var Task = sequelize.define('task', {
-    title:{
+var User = sequelize.define('user', {
+    pseudo: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    description:{
-        type: Sequelize.TEXT,
+    password: {
+        type: Sequelize.STRING,
         allowNull: false
-    }
+    },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    description: Sequelize.TEXT,
 });
 
-
-//Exporting model
-module.exports = Task;
+ //Exporting model
+ module.exports = User;
