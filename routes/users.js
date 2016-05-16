@@ -32,7 +32,8 @@ router.get('/', function(req, res) {
         password: req.body.password,
         email: req.body.email
     })
-    user.save().then(function() {
+    user.save()
+    .then(function() {
         res.send("User added successfuly.")
     })
     .catch(function(err){
@@ -41,21 +42,13 @@ router.get('/', function(req, res) {
 })
 
 .get('/:id', function(req, res) {
-    User.findAll({
-        attributes: ['pseudo', 'description', 'email'],
-        where: {
-            id: req.params.id
-        },
-        include: [{
-            model: Task
-        }]
+    User.findById()
+    .then(function(user){
+        res.send(user)
     })
-        .then(function(user){
-            res.send(user)
-        })
-        .catch(function(err) {
-            res.send(err)
-        })
+    .catch(function(err) {
+        res.send(err)
+    })
 })
 
 .put('/:id', function(req, res){
@@ -70,12 +63,12 @@ router.get('/', function(req, res) {
 })
 
 .get('/:id/tasks', function(req, res){
-    User.findAll({
-        where: {id: req.params.id}, 
-        include:{model: Task}
-    })
+    User.findById(req.params.id)
     .then(function(user){
-        res.send(user.tasks)
+        user.getTasks()
+        .then(function(tasks){
+            res.send(tasks)
+        })
     })
     .catch(function(err){
         res.send(err)
@@ -84,10 +77,10 @@ router.get('/', function(req, res) {
 
 .delete('/:id', function(req, res) {
     User.findById(req.params.id)
-        .then(function(user){
-            user.destroy();
-            res.send('User deleted successfuly')
-        })
+    .then(function(user){
+        user.destroy();
+        res.send('User deleted successfuly')
+    })
     .catch(function(err) {
         res.send(err)
     })

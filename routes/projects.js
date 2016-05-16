@@ -16,7 +16,7 @@ var Task = models.Task;
  */
 router.get('/', function(req, res) {
     Project.findAll()
-    .then(function(project) {
+    .then(function(projects) {
         res.send(projects)
     })
     .catch(function(err) {
@@ -30,22 +30,31 @@ router.get('/', function(req, res) {
         description: req.body.description
     })
     project.save()
-        .then(function() {
-            res.send("Project added successfuly.")
-        })
-        .catch(function(err){
-            res.send(err)
-        })
+    .then(function() {
+        res.send("Project added successfuly.")
+    })
+    .catch(function(err){
+        res.send(err)
+    })
 })
 
 .get('/:id', function(req, res) {
-    Project.findAll({
-        where: {
-            id: req.params.id
-        }
-    })
+    Project.findById(req.params.id)
     .then(function(project){
         res.send(project)
+    })
+    .catch(function(err){
+        res.send(err)
+    })
+})
+
+.get('/:id/tasks', function(req, res){
+    Project.findById(req.params.id)
+    .then(function(project){
+        project.getTasks()
+        .then(function(tasks){
+            res.send(tasks)
+        })
     })
     .catch(function(err){
         res.send(err)
@@ -64,16 +73,12 @@ router.get('/', function(req, res) {
 })
 
 .delete('/:id', function(req, res){
-    Project.findAll({
-        where: {
-            id: req.params.id
-        }
-    })
+    Project.findById(req.params.id)
     .then(function(project){
         project.destroy();
         res.send('Project deleted successfully.');
     })
-    .catch(function(req, res){
+    .catch(function(err){
         res.send(err)
     })
 })
