@@ -4,6 +4,7 @@
 var sequelize = require('./sequelize');
 var Task = require('./Task');
 var User = require('./User');
+var Project = require('./Project');
 
 /*
  * Database testing
@@ -17,10 +18,13 @@ sequelize.validate().then(function(err) {
 });
 
 /*
- * Defininf relations between models
+ * Defining relations between models
  */
 User.hasMany(Task);
 Task.belongsTo(User);
+
+Project.hasMany(Task);
+Task.belongsTo(Project);
 
 /*
  * Syncing database
@@ -33,7 +37,8 @@ sequelize.sync();
  */
 module.exports = {
     sequelize : sequelize,
-    Task : Task,
-    User : User
+    Task: Task,
+    User: User,
+    Project: Project
 };
 

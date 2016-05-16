@@ -4,6 +4,7 @@
 var express = require('express');
 var models = require('./models');
 var bodyParser = require('body-parser');
+var routes = require('./routes');
 
 /*
  * Creating express app
@@ -15,7 +16,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 /*
  * Routing
  */
-require('./routes')(app);
+app.use('/', routes);
 
 /*
  * Server listener
