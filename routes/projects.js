@@ -52,6 +52,17 @@ router.get('/', function(req, res) {
     })
 })
 
+.put('/:id', function(req, res){
+    Project.findById(req.params.id)
+    .then(function(user){
+        project.update(req.body);
+        res.send("Project updated successfully.");
+    })
+    .catch(function(err){
+        res.send(err)
+    })
+})
+
 .delete('/:id', function(req, res){
     Project.findAll({
         where: {

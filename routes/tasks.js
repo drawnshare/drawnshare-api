@@ -50,17 +50,18 @@ router.get('/', function(req, res) {
     Task.findById(req.params.id)
         .then(function(task) {
             task.update(req.body);
-            res.send("Task updated successfuly")
+            res.send("Task updated successfuly.")
         })
         .catch(function(err) {
             res.send(err)
         })
 })
+
 .delete('/:id', function(req, res) {
     Task.findById(req.params.id)
         .then(function(task) {
             task.destroy();
-            res.send('Task deleted successfuly')
+            res.send("Task deleted successfuly.")
         })
     .catch(function(err) {
         res.send(err)

@@ -58,6 +58,17 @@ router.get('/', function(req, res) {
         })
 })
 
+.put('/:id', function(req, res){
+    User.findById(req.params.id)
+    .then(function(user){
+        user.update(req.body);
+        res.send("User updated successfully.");
+    })
+    .catch(function(err){
+        res.send(err)
+    })
+})
+
 .get('/:id/tasks', function(req, res){
     User.findAll({
         where: {id: req.params.id}, 
