@@ -6,9 +6,9 @@ var express = require('express');
 var router = express.Router();
 
 /*
- * Getting the task model
+ * Getting needed models
  */
-var Task = models.Task
+var Task = models.Task;
 
 /*
  * All routes and middleware for /tasks
@@ -56,8 +56,16 @@ router.get('/', function(req, res) {
             res.send(err)
         })
 })
+.delete('/:id', function(req, res) {
+    Task.findById(req.params.id)
+        .then(function(task) {
+            task.destroy();
+            res.send('Task deleted successfuly')
+        })
+    .catch(function(err) {
+        res.send(err)
+    })
+})
 
-/*
- * Exporting router
- */
+//Exporting router
 module.exports = router;
