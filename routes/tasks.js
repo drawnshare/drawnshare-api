@@ -11,8 +11,17 @@ var router = express.Router();
 var Task = models.Task;
 var Project = models.Project;
 
-/*
+/**
  * All routes and middleware for /tasks
+ * @api {get} /tasks Request all tasks
+ * @apiName GetTasks
+ * @apiGroup Task
+ *
+ * @apiSuccess {Number} id Id of the task
+ * @apiSuccess {String} title The title of the task
+ * @apiSuccess {String} description The task's description
+ * @apiSuccess {Date} createdAt The creation date
+ * @apiSuccess {Date} updatedAt The date the tasks was last updated
  */
 router.get('/', function(req, res) {
     Task.findAll()
