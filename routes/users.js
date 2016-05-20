@@ -60,7 +60,7 @@ router.get('/', function(req, res) {
     })
     user.save()
     .then(function() {
-        res.send("User added successfuly.")
+        res.send({success: "User added successfuly." })
     })
     .catch(function(err){
         res.send(err)
@@ -103,7 +103,7 @@ router.get('/', function(req, res) {
     User.findById(req.params.id)
     .then(function(user){
         user.update(req.body);
-        res.send("User updated successfully.");
+        res.send({success: "User updated successfully." });
     })
     .catch(function(err){
         res.send(err)
@@ -150,7 +150,7 @@ router.get('/', function(req, res) {
     User.findById(req.params.id)
     .then(function(user){
         user.destroy();
-        res.send("User deleted successfuly.")
+        res.send({success: "User deleted successfuly." })
     })
     .catch(function(err) {
         res.send(err)

@@ -54,7 +54,7 @@ router.get('/', function(req, res) {
     })
     project.save()
     .then(function() {
-        res.send("Project added successfuly.")
+        res.send({success: "Project added successfuly." })
     })
     .catch(function(err){
         res.send(err)
@@ -123,7 +123,7 @@ router.get('/', function(req, res) {
     Project.findById(req.params.id)
     .then(function(user){
         project.update(req.body);
-        res.send("Project updated successfully.");
+        res.send({success: "Project updated successfully." });
     })
     .catch(function(err){
         res.send(err)
@@ -143,7 +143,7 @@ router.get('/', function(req, res) {
     Project.findById(req.params.id)
     .then(function(project){
         project.destroy();
-        res.send('Project deleted successfully.');
+        res.send({success: "Project deleted successfully." });
     })
     .catch(function(err){
         res.send(err)

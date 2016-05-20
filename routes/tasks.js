@@ -56,7 +56,7 @@ router.get('/', function(req, res) {
             title: req.body.title,
             description: req.body.description
         })
-        res.send("Task added successfuly.");
+        res.send({ success: "Task added successfuly." });
     })
     .catch(function(err) {
         res.send(err)
@@ -100,7 +100,7 @@ router.get('/', function(req, res) {
     Task.findById(req.params.id)
     .then(function(task) {
         task.update(req.body);
-        res.send("Task updated successfuly.")
+        res.send({success: "Task updated successfuly." })
     })
     .catch(function(err) {
         res.send(err)
@@ -120,7 +120,7 @@ router.get('/', function(req, res) {
     Task.findById(req.params.id)
     .then(function(task) {
         task.destroy();
-        res.send("Task deleted successfuly.")
+        res.send({success: "Task deleted successfuly." })
     })
     .catch(function(err) {
         console.log('error');
