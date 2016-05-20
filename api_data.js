@@ -1,5 +1,48 @@
 define({ "api": [
   {
+    "type": "post",
+    "url": "/projects",
+    "title": "Create a new project",
+    "name": "CreateProject",
+    "group": "Project",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>The title of the task</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>A short description of the task</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "success",
+            "description": "<p>A short message &quot;Project added successfuly.&quot;</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/projects.js",
+    "groupTitle": "Project"
+  },
+  {
     "type": "get",
     "url": "/projects/:id",
     "title": "Request a project",
@@ -257,49 +300,6 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "routes/projects.js",
     "groupTitle": "Project"
-  },
-  {
-    "type": "post",
-    "url": "/projects",
-    "title": "Create a new project",
-    "name": "CreateTask",
-    "group": "Task",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "title",
-            "description": "<p>The title of the task</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "description",
-            "description": "<p>A short description of the task</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "success",
-            "description": "<p>A short message &quot;Project added successfuly.&quot;</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "routes/projects.js",
-    "groupTitle": "Task"
   },
   {
     "type": "post",
