@@ -1,12 +1,12 @@
 define({
-  "name": "",
-  "version": "0.0.0",
-  "description": "",
+  "name": "drawnshare-api",
+  "version": "0.1",
+  "description": "Small API used in the drawn n' share project.",
   "sampleUrl": false,
   "apidoc": "0.2.0",
   "generator": {
     "name": "apidoc",
-    "time": "2016-05-18T22:21:38.757Z",
+    "time": "2016-05-20T14:38:55.916Z",
     "url": "http://apidocjs.com",
     "version": "0.16.1"
   }
