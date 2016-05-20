@@ -39,8 +39,8 @@ router.get('/', function(req, res) {
 
 /**
  * @api {post} /projects Create a new project
- * @apiName CreateTask
- * @apiGroup Task
+ * @apiName CreateProject
+ * @apiGroup Project
  *
  * @apiParam {String} title The title of the task
  * @apiParam {String} description A short description of the task
