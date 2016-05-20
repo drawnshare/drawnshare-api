@@ -13,15 +13,18 @@ var Project = models.Project;
 
 /**
  * All routes and middleware for /tasks
- * @api {get} /tasks Request all tasks
+ */
+
+ /** @api {get} /tasks Request all tasks
  * @apiName GetTasks
  * @apiGroup Task
  *
- * @apiSuccess {Number} id Id of the task
- * @apiSuccess {String} title The title of the task
- * @apiSuccess {String} description The task's description
- * @apiSuccess {Date} createdAt The creation date
- * @apiSuccess {Date} updatedAt The date the tasks was last updated
+ * @apiSuccess {Object[]} tasks
+ * @apiSuccess {Number} tasks.id Id of the task
+ * @apiSuccess {String} tasks.title The title of the task
+ * @apiSuccess {String} tasks.description The task's description
+ * @apiSuccess {Date} tasks.createdAt The creation date
+ * @apiSuccess {Date} tasks.updatedAt The date the tasks was last updated
  */
 router.get('/', function(req, res) {
     Task.findAll()
@@ -33,6 +36,18 @@ router.get('/', function(req, res) {
     });
 })
 
+/**
+ * @api {post} /tasks Create a new Task
+ * @apiName CreateTask
+ * @apiGroup Task
+ *
+ * @apiParam {String} title The title of the task
+ * @apiParam {String} description A short description of the task
+ * @apiParam {Number} projectId The id of the projects the task is part of
+ * @apiParam {Number} [userId] Optional id of the user in charge of the task
+ *
+ * @apiSuccess {String} success A short message "Task added successfuly."
+ */
 .post('/', function(req, res) {
     Project.findById(req.body.projectId)
     .then(function(project){
@@ -40,13 +55,27 @@ router.get('/', function(req, res) {
             title: req.body.title,
             description: req.body.description
         })
-    res.send("Task added successfuly.");
+        res.send("Task added successfuly.");
     })
     .catch(function(err) {
         res.send(err)
     })
 })
 
+/**
+ * @api {get} /tasks/:id Get a single task
+ * @apiName GetTask
+ * @apiGroup Task
+ *
+ * @apiParam {Number} id The id of the desired task
+ *
+ * @apiSuccess {Object} task Task informations
+ * @apiSuccess {Number} task.id Id of the task
+ * @apiSuccess {String} task.title The title of the task
+ * @apiSuccess {String} task.description The task's description
+ * @apiSuccess {Date} task.createdAt The creation date
+ * @apiSuccess {Date} task.updatedAt The date the tasks was last updated
+ */
 .get('/:id', function(req, res){
     Task.findById(req.params.id)
     .then(function(task) {
@@ -57,6 +86,15 @@ router.get('/', function(req, res) {
     })
 })
 
+/**
+ * @api {put} /tasks/:id Change a tasks informations
+ * @apiName SetTask
+ * @apiGroup Task
+ *
+ * @apiParam {Number} id The id of the task to update
+ *
+ * @apiSuccess {String} success A short message saying "Task updated successfuly."
+ */
 .put('/:id', function(req, res) {
     Task.findById(req.params.id)
     .then(function(task) {
@@ -68,6 +106,15 @@ router.get('/', function(req, res) {
     })
 })
 
+/**
+ * @api {delete} /tasks/:id Delete a task
+ * @apiName RemoveTask
+ * @apiGroup Task
+ *
+ * @apiParam {Number} id The id of the task to update
+ *
+ * @apiSuccess {String} success A short message saying "Task updated successfuly."
+ */
 .delete('/:id', function(req, res) {
     Task.findById(req.params.id)
     .then(function(task) {
