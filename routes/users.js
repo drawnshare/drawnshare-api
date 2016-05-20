@@ -53,12 +53,11 @@ router.get('/', function(req, res) {
  * @apiSuccess {String} success A short message saying "User added successfuly."
  */
 .post('/', function(req, res) {
-    var user = User.build({
+    User.create({
         pseudo: req.body.pseudo,
         password: req.body.password,
         email: req.body.email
     })
-    user.save()
     .then(function() {
         res.send({success: "User added successfuly." })
     })

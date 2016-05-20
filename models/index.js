@@ -23,8 +23,8 @@ sequelize.validate().then(function(err) {
 User.hasMany(Task);
 Task.belongsTo(User);
 
-Project.hasMany(Task);
-Task.belongsTo(Project);
+Project.hasMany(Task, {foreignKey: {allowNull: false}});
+Task.belongsTo(Project, {foreignKey: {allowNull: false}});
 
 /*
  * Syncing database

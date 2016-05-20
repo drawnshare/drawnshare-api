@@ -48,11 +48,10 @@ router.get('/', function(req, res) {
  * @apiSuccess {String} success A short message "Project added successfuly."
  */
 .post('/', function(req, res) {
-    var project = Project.build({
+    Project.create({
         title: req.body.title,
         description: req.body.description
     })
-    project.save()
     .then(function() {
         res.send({success: "Project added successfuly." })
     })

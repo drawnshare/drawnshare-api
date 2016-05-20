@@ -50,13 +50,13 @@ router.get('/', function(req, res) {
  * @apiSuccess {String} success A short message "Task added successfuly."
  */
 .post('/', function(req, res) {
-    Project.findById(req.body.projectId)
-    .then(function(project){
-        project.createTask({
-            title: req.body.title,
-            description: req.body.description
-        })
-        res.send({ success: "Task added successfuly." });
+    Task.create({
+        title: req.body.title,
+        description: req.body.description,
+        projectId: req.body.projectId
+    })
+    .then(function() {
+        res.send({success: "Task added successfuly."});
     })
     .catch(function(err) {
         res.send(err)
