@@ -15,7 +15,8 @@ var Project = models.Project;
  * All routes and middleware for /tasks
  */
 
- /** @api {get} /tasks Request all tasks
+/**
+ * @api {get} /tasks Request all tasks
  * @apiName GetTasks
  * @apiGroup Task
  *
@@ -111,7 +112,7 @@ router.get('/', function(req, res) {
  * @apiName RemoveTask
  * @apiGroup Task
  *
- * @apiParam {Number} id The id of the task to update
+ * @apiParam {Number} id The id of the task to delete
  *
  * @apiSuccess {String} success A short message saying "Task updated successfuly."
  */
