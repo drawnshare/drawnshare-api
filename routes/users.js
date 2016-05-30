@@ -29,7 +29,8 @@ var User = models.User;
  */
 router.get('/', function(req, res) {
     User.findAll({
-        attributes: ['pseudo', 'description', 'email', 'createdAt', 'updatedAt'] //Getting only those fields
+        //Getting only some fields
+        attributes: ['pseudo', 'description', 'email', 'createdAt', 'updatedAt'] 
     })
     .then(function(users) {
         res.send(users)
@@ -57,11 +58,11 @@ router.get('/', function(req, res) {
         password: req.body.password,
         email: req.body.email
     })
-    .then(function() {
-        res.send({success: "User added successfuly." })
+    .then(function(user) {
+        res.send({success: "User added successfuly.", user});
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -81,10 +82,14 @@ router.get('/', function(req, res) {
 .get('/:id', function(req, res) {
     User.findById(req.params.id)
     .then(function(user){
-        res.send(user)
+        if(user){
+            res.send(user);
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err) {
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -105,13 +110,20 @@ router.get('/', function(req, res) {
 .get('/:id/projects', function(req, res){
     User.findById(req.params.id)
     .then(function(user){
-        user.getProjects()
-        .then(function(projects){
-            res.send(projects)
-        })
+        if(user){
+            user.getProjects()
+            .then(function(projects){
+                res.send(projects);
+            })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -127,11 +139,20 @@ router.get('/', function(req, res) {
 .put('/:id', function(req, res){
     User.findById(req.params.id)
     .then(function(user){
-        user.update(req.body);
-        res.send({success: "User updated successfully." });
+        if(user) {
+            user.update(req.body)
+            .then(function(){
+                res.send({success: "User updated successfully."});
+            })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -152,13 +173,20 @@ router.get('/', function(req, res) {
 .get('/:id/tasks', function(req, res){
     User.findById(req.params.id)
     .then(function(user){
-        user.getTasks()
-        .then(function(tasks){
-            res.send(tasks)
-        })
+        if(user){
+            user.getTasks()
+            .then(function(tasks){
+                res.send(tasks);
+            })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -174,11 +202,20 @@ router.get('/', function(req, res) {
 .delete('/:id', function(req, res) {
     User.findById(req.params.id)
     .then(function(user){
-        user.destroy();
-        res.send({success: "User deleted successfuly." })
+        if(user){
+            user.destroy()
+            .then(function(){
+                res.send({success: "User deleted successfuly."});
+            })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err) {
-        res.send(err)
+        res.send(err);
     })
 })
 

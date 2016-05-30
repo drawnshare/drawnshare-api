@@ -45,17 +45,23 @@ router.get('/', function(req, res) {
  * @apiParam {String} description A short description of the task
  *
  * @apiSuccess {String} success A short message "Project added successfuly."
+ * @apiSuccess {Object} project
+ * @apiSuccess {Number} project.id Id of the project
+ * @apiSuccess {String} project.title The title of the project
+ * @apiSuccess {String} project.description The description of the project
+ * @apiSuccess {Date} project.createdAt The project's creation date
+ * @apiSuccess {Date} project.updatedAt The date for when the projects was last updated
  */
 .post('/', function(req, res) {
     Project.create({
         title: req.body.title,
         description: req.body.description
     })
-    .then(function() {
-        res.send({success: "Project added successfuly." })
+    .then(function(project) {
+        res.send({success: "Project added successfuly.", project});
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -74,10 +80,14 @@ router.get('/', function(req, res) {
 .get('/:id', function(req, res) {
     Project.findById(req.params.id)
     .then(function(project){
-        res.send(project)
+        if(project) {
+            res.send(project);
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -98,13 +108,20 @@ router.get('/', function(req, res) {
 .get('/:id/tasks', function(req, res){
     Project.findById(req.params.id)
     .then(function(project){
-        project.getTasks()
-        .then(function(tasks){
-            res.send(tasks)
-        })
+        if(project) {
+            project.getTasks()
+            .then(function(tasks){
+                res.send(tasks);
+            })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -126,13 +143,17 @@ router.get('/', function(req, res) {
 .get('/:id/users', function(req, res){
     Project.findById(req.params.id)
     .then(function(project){
-        project.getUsers()
-        .then(function(users){
-            res.send(users)
-        })
+        if(project) {
+            project.getUsers()
+            .then(function(users){
+                res.send(users);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -148,11 +169,20 @@ router.get('/', function(req, res) {
 .put('/:id', function(req, res){
     Project.findById(req.params.id)
     .then(function(project){
-        project.update(req.body);
-        res.send({success: "Project updated successfully." })
+        if(project) {
+            project.update(req.body)
+                .then(function(){
+                    res.send({success: "Project updated successfully."});
+                })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -170,13 +200,17 @@ router.get('/', function(req, res) {
 .put('/:id/users', function(req, res){
     Project.findById(req.params.id)
     .then(function(project){
-        project.addUser(req.body.userId)
-        .then(function(){
-            res.send({success: "User linked successfully."});
-        })
-        .catch(function(err){
-            res.send(err);
-        })
+        if(project){
+            project.addUser(req.body.userId)
+            .then(function(){
+                res.send({success: "User linked successfully."});
+            })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
         res.send(err);
@@ -195,11 +229,17 @@ router.get('/', function(req, res) {
 .delete('/:id', function(req, res){
     Project.findById(req.params.id)
     .then(function(project){
-        project.destroy();
-        res.send({success: "Project deleted successfully." });
+        if(project){
+            project.destroy()
+            .then(function(rows){
+                res.send({success: "Project deleted successfully." });
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 

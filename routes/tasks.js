@@ -9,7 +9,6 @@ var router = express.Router();
  * Getting needed models
  */
 var Task = models.Task;
-var Project = models.Project;
 
 /**
  * All routes and middleware for /tasks
@@ -30,11 +29,11 @@ var Project = models.Project;
 router.get('/', function(req, res) {
     Task.findAll()
     .then(function(tasks) {
-        res.send(tasks)
+        res.send(tasks);
     })
     .catch(function(err){
-        res.send(err)
-    });
+        res.send(err);
+    })
 })
 
 /**
@@ -48,6 +47,12 @@ router.get('/', function(req, res) {
  * @apiParam {Number} [userId] Optional id of the user in charge of the task
  *
  * @apiSuccess {String} success A short message "Task added successfuly."
+ * @apiSuccess {Object} task Task informations
+ * @apiSuccess {Number} task.id Id of the task
+ * @apiSuccess {String} task.title The title of the task
+ * @apiSuccess {String} task.description The task's description
+ * @apiSuccess {Date} task.createdAt The creation date
+ * @apiSuccess {Date} task.updatedAt The date the tasks was last updated
  */
 .post('/', function(req, res) {
     Task.create({
@@ -55,11 +60,11 @@ router.get('/', function(req, res) {
         description: req.body.description,
         projectId: req.body.projectId
     })
-    .then(function() {
-        res.send({success: "Task added successfuly."});
+    .then(function(task) {
+        res.send({success: "Task added successfuly.", task});
     })
     .catch(function(err) {
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -80,7 +85,11 @@ router.get('/', function(req, res) {
 .get('/:id', function(req, res){
     Task.findById(req.params.id)
     .then(function(task) {
-        res.send(task)
+        if(task){
+            res.send(task);
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err) {
         res.send(err)
@@ -99,11 +108,20 @@ router.get('/', function(req, res) {
 .put('/:id', function(req, res) {
     Task.findById(req.params.id)
     .then(function(task) {
-        task.update(req.body);
-        res.send({success: "Task updated successfuly." })
+        if(task) {
+            task.update(req.body)
+            .then(function(){
+                res.send({success: "Task updated successfuly."});
+            })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err) {
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -121,16 +139,20 @@ router.get('/', function(req, res) {
 .put('/:id/users', function(req, res){
     Task.findById(req.params.id)
     .then(function(task){
-        task.setUser(req.body.userId)
-        .then(function(){
-            res.send({success: "User assigned successfully"});
-        })
-        .catch(function(err){
-            res.send(err)
-        })
+        if(task) {
+            task.setUser(req.body.userId)
+            .then(function(){
+                res.send({success: "User assigned successfully"});
+            })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
@@ -146,12 +168,20 @@ router.get('/', function(req, res) {
 .delete('/:id', function(req, res) {
     Task.findById(req.params.id)
     .then(function(task) {
-        task.destroy();
-        res.send({success: "Task deleted successfuly." })
+        if(task) {
+            task.destroy()
+            .then(function(rows){
+                res.send({success: "Task deleted successfuly."});
+            })
+            .catch(function(err){
+                res.send(err);
+            })
+        } else {
+            res.sendStatus(404);
+        }
     })
     .catch(function(err) {
-        console.log('error');
-        res.send(err)
+        res.send(err);
     })
 })
 
