@@ -23,6 +23,9 @@ sequelize.validate().then(function(err) {
 User.hasMany(Task);
 Task.belongsTo(User);
 
+User.belongsToMany(Project, {through: 'ProjectUser'});
+Project.belongsToMany(User, {through: 'ProjectUser'});
+
 Project.hasMany(Task, {foreignKey: {allowNull: false}});
 Task.belongsTo(Project, {foreignKey: {allowNull: false}});
 
