@@ -108,6 +108,33 @@ router.get('/', function(req, res) {
 })
 
 /**
+ * @api {put} /tasks/:id/users Assign a user to a task
+ * @apiName SetTaskUser
+ * @apiGroup Task
+ *
+ * @apiParam {Number} id The task's id
+ *
+ * @apiParam {Number} userId The user's id
+ *
+ * @apiSuccess {String} success A short message saying "User assigned successfully"
+ */
+.put('/:id/users', function(req, res){
+    Task.findById(req.params.id)
+    .then(function(task){
+        task.setUser(req.body.userId)
+        .then(function(){
+            res.send({success: "User assigned successfully"});
+        })
+        .catch(function(err){
+            res.send(err)
+        })
+    })
+    .catch(function(err){
+        res.send(err)
+    })
+})
+
+/**
  * @api {delete} /tasks/:id Delete a task
  * @apiName RemoveTask
  * @apiGroup Task

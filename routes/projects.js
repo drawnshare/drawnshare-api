@@ -170,11 +170,16 @@ router.get('/', function(req, res) {
 .put('/:id/users', function(req, res){
     Project.findById(req.params.id)
     .then(function(project){
-        project.addUser(req.body.userId);
-        res.send({success: "User linked successfully." })
+        project.addUser(req.body.userId)
+        .then(function(){
+            res.send({success: "User linked successfully."});
+        })
+        .catch(function(err){
+            res.send(err);
+        })
     })
     .catch(function(err){
-        res.send(err)
+        res.send(err);
     })
 })
 
