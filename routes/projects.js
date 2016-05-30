@@ -9,7 +9,6 @@ var router = express.Router();
  * Getting needed models
  */
 var Project = models.Project;
-var Task = models.Task;
 
 /**
  * All routes and middleware for /projects
@@ -25,7 +24,7 @@ var Task = models.Task;
  * @apiSuccess {String} projects.title The title of the project
  * @apiSuccess {String} projects.description The description of the project
  * @apiSuccess {Date} projects.createdAt The project's creation date
- * @apiSuccess {Date} projects.updatedAt The date for the last time the projects was updated
+ * @apiSuccess {Date} projects.updatedAt The date for when the project was last updated
  */
 router.get('/', function(req, res) {
     Project.findAll()
@@ -110,6 +109,34 @@ router.get('/', function(req, res) {
 })
 
 /**
+ * @api {get} projects/:id/users Request all users for a project
+ * @apiName getProjectUsers
+ * @apiGroup Project
+ *
+ * @apiParam {Number} id The project's id
+ *
+ * @apiSuccess {Object[]} users
+ * @apiSuccess {Number} users.id The id of the user
+ * @apiSuccess {String} users.pseudo The user's pseudo
+ * @apiSuccess {String} user.description The user's description
+ * @apiSuccess {String} users.email The user's description
+ * @apiSuccess {Date} users.createdAt The user's creation date
+ * @apiSuccess {Date} users.updatedAt The date the user's profile was last updated
+ */
+.get('/:id/users', function(req, res){
+    Project.findById(req.params.id)
+    .then(function(project){
+        project.getUsers()
+        .then(function(users){
+            res.send(users)
+        })
+    })
+    .catch(function(err){
+        res.send(err)
+    })
+})
+
+/**
  * @api {put} /projects/:id Change a project informations
  * @apiName SetProject
  * @apiGroup Project
@@ -120,9 +147,31 @@ router.get('/', function(req, res) {
  */
 .put('/:id', function(req, res){
     Project.findById(req.params.id)
-    .then(function(user){
+    .then(function(project){
         project.update(req.body);
-        res.send({success: "Project updated successfully." });
+        res.send({success: "Project updated successfully." })
+    })
+    .catch(function(err){
+        res.send(err)
+    })
+})
+
+/**
+ * @api {put} /projects/:id/users Add a user to a project
+ * @apiName SetProjectUser
+ * @apiGroup Project
+ *
+ * @apiParam {Number} id The project's id
+ *
+ * @apiParam {Number} userId the user's id
+ *
+ * @apiSuccess {String} success A short message saying "User linked successfully." 
+ */
+.put('/:id/users', function(req, res){
+    Project.findById(req.params.id)
+    .then(function(project){
+        project.addUser(req.body.userId);
+        res.send({success: "User linked successfully." })
     })
     .catch(function(err){
         res.send(err)

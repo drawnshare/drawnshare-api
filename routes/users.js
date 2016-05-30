@@ -9,7 +9,6 @@ var router = express.Router();
  * Getting needed models
  */
 var User = models.User;
-var Task = models.Task;
 
 /**
  * All routes and middleware for /users
@@ -80,11 +79,38 @@ router.get('/', function(req, res) {
  * @apiSuccess {Date} user.updatedAt The date the user's profile was last updated
  */
 .get('/:id', function(req, res) {
-    User.findById()
+    User.findById(req.params.id)
     .then(function(user){
         res.send(user)
     })
     .catch(function(err) {
+        res.send(err)
+    })
+})
+
+/**
+ * @api {get} /users/:id/projects
+ * @apiName GetUserProjects
+ * @apiGroup User
+ *
+ * @apiParam {String} id The user's id
+ *
+ * @apiSuccess {Object[]} projects
+ * @apiSuccess {Number} projects.id Id of the project
+ * @apiSuccess {String} projects.title The title of the project
+ * @apiSuccess {String} projects.description The description of the project
+ * @apiSuccess {Date} projects.createdAt The project's creation date
+ * @apiSuccess {Date} projects.updatedAt The date for when the project was last updated
+ */
+.get('/:id/projects', function(req, res){
+    User.findById(req.params.id)
+    .then(function(user){
+        user.getProjects()
+        .then(function(projects){
+            res.send(projects)
+        })
+    })
+    .catch(function(err){
         res.send(err)
     })
 })
