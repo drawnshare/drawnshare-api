@@ -3,6 +3,14 @@ This is the API of the drawn n' share project.
 
 # Usage
 
+## Docker
+You can run the API in docker with the following commands:
+```
+docker build -t drawnshare-api ./
+# and then
+docker start -p 3000 -d drawnshare-api
+```
+
 ## Prerequisites
 Since it's a nodejs API, you'll need nodejs to run it and npm to get the third-party
 packages. If under Linux, a quick command-line will do:
